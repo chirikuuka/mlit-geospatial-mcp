@@ -57,7 +57,7 @@ Claude MCPから不動産情報ライブラリAPIを統合的に呼び出すた�
 
    **【Pythonをインストール】**
    * Pythonをインストールしてください。（バージョンは、3.10以上をインストールしてください。）  
-   Pythonの公式ダウンロードページ[https://www.python.org/downloads/windows/]から、利用OSに合わせて3.10以上のインストーラーをダウンロードして、インストーラーを起動してください。
+   [Pythonの公式ダウンロードページ](https://www.python.org/) から、利用OSに合わせて3.10以上のインストーラーをダウンロードして、インストーラーを起動してください。
    * インストーラーの指示に従って、インストールを行ってください。  
       画面下部の「Add Python 3.x to PATH」のチェックボックスにチェックを入れてから、 Install Now を選択してください。  
       ※「Add Python 3.x to PATH」のチェックボックスにチェックを忘れてインストールした場合は、環境変数にPython.exeの場所を追加してください。
@@ -67,12 +67,12 @@ Claude MCPから不動産情報ライブラリAPIを統合的に呼び出すた�
       quit() と入力しEnterを押して、Pythonを終了してください。
 
 2. **Claude Desktopをダウンロード・インストール**
-   * Claudeの公式ダウンロードページ[https://claude.com/download]にアクセスし、インストーラーをダウンロードしてください。
+   * [Claudeの公式ダウンロードページ](https://claude.com/download)にアクセスし、インストーラーをダウンロードしてください。
    * ダウンロードしたファイルを実行するとインストールが開始されます。  
       画面の案内に従って「始める」をクリックし、アカウント認証を行うことでインストールが完了します。
 
 3. **不動産情報ライブラリのAPI利用申請**
-   • 不動産情報ライブラリの公式ページ[https://www.reinfolib.mlit.go.jp/api/request/]にアクセスし、API利用申請をしてください。   
+   * [不動産情報ライブラリの公式ページ](https://www.reinfolib.mlit.go.jp/api/request/)にアクセスし、API利用申請をしてください。   
 
 4. **ソースコードをcloneする**
    * cloneするためのディレクトリを作成します。（例：mlit-geospatial-mcp）
@@ -91,7 +91,7 @@ Claude MCPから不動産情報ライブラリAPIを統合的に呼び出すた�
    .venv\Scripts\activate      # Windowsの場合
    source .venv/bin/activate   # macOS/Linuxの場合
    ```
-   (.venv) C:\Users\username\mlit-geospatial-mcp>の状態になれば成功です。
+   (.venv) C:\Users\username\mlit-geospatial-mcp> の状態になれば成功です。
 
 6. **依存ライブラリをインストール**
    * 以下のコマンドを実行します。
@@ -136,6 +136,7 @@ Claude MCPから不動産情報ライブラリAPIを統合的に呼び出すた�
 9. **Claude Desktop を再起動**  
    Claude Desktopの左上にある「≡」のファイル＞終了をクリックして終了し、再度Claude Desktopを起動します。  
    ※Claude Desktopが起動しない場合は、タスクマネージャーで「タスクの終了」を実行した後、再度起動を試してください。
+
 
 
 
