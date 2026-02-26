@@ -78,7 +78,7 @@ Claude MCPから不動産情報ライブラリAPIを統合的に呼び出すた�
    * cloneするためのディレクトリを作成します。（例：mlit-geospatial-mcp）
    * コマンドプロンプトを起動して、任意のディレクトリに移動し、cloneします。
    ```bash
-   例：cd mlit-geospatial-mcp
+   cd mlit-geospatial-mcp
    git clone https://github.com/chirikuuka/mlit-geospatial-mcp.git
    ```
    ※cloneのURLは、githubにてページ上部の「code」ボタンからコピーできます。
@@ -136,5 +136,6 @@ Claude MCPから不動産情報ライブラリAPIを統合的に呼び出すた�
 9. **Claude Desktop を再起動**  
    Claude Desktopの左上にある「≡」のファイル＞終了をクリックして終了し、再度Claude Desktopを起動します。  
    ※Claude Desktopが起動しない場合は、タスクマネージャーで「タスクの終了」を実行した後、再度起動を試してください。
+
 
 
