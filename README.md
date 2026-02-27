@@ -131,10 +131,11 @@ Claude MCPから不動産情報ライブラリAPIを統合的に呼び出すた�
 
    * `command`と`args`は必ず、実際のパスに変更してください。  
    (例：C:/Users/username/mlit-geospatial-mcp/.venv/Scripts/python.exe)
-   * `your_api_key_here`は必ず、手順4で取得したキーに置き換えてください。
+   * `your_api_key_here`は必ず、手順3で取得したキーに置き換えてください。
 
 9. **Claude Desktop を再起動**  
    Claude Desktopの左上にある「≡」のファイル＞終了をクリックして終了し、再度Claude Desktopを起動します。  
    ※Claude Desktopが起動しない場合は、タスクマネージャーで「タスクの終了」を実行した後、再度起動を試してください。
+
 
 
