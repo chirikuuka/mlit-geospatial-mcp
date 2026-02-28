@@ -14,6 +14,7 @@ from mcp.server.lowlevel import NotificationOptions, Server
 from mcp.server.models import InitializationOptions
 from mcp.server.stdio import stdio_server
 
+from resources import PROMPTS, RESOURCES, build_prompt, build_resource_contents
 from request_processor.handler import handle_request
 from tools import API_SPECS, TOOLS
 from utils.payload import build_payload
@@ -36,6 +37,57 @@ async def handle_list_tools():
         TOOLS:ツール定義のリスト
     """
     return TOOLS
+
+
+@server.list_resources()
+async def handle_list_resources():
+    """
+    利用可能なリソース一覧を取得する。
+
+    Returns:
+        RESOURCES: リソース定義のリスト
+    """
+    return RESOURCES
+
+
+@server.read_resource()
+async def handle_read_resource(uri: str):
+    """
+    リソースURIに対応する本文を取得する。
+
+    Args:
+        uri(str): 取得対象のリソースURI
+
+    Returns:
+        list[TextResourceContents]: リソース本文
+    """
+    return build_resource_contents(uri)
+
+
+@server.list_prompts()
+async def handle_list_prompts():
+    """
+    利用可能なプロンプト一覧を取得する。
+
+    Returns:
+        PROMPTS: プロンプト定義のリスト
+    """
+    return PROMPTS
+
+
+@server.get_prompt()
+async def handle_get_prompt(name: str, arguments: dict | None = None):
+    """
+    プロンプト名に対応するプロンプト本文を取得する。
+
+    Args:
+        name(str): 取得対象のプロンプト名
+        arguments(dict | None): プロンプト引数
+
+    Returns:
+        GetPromptResult: プロンプト本文
+    """
+    return build_prompt(name, arguments)
 
 
 @server.call_tool()
