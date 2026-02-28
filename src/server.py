@@ -28,6 +28,46 @@ logger = logging.getLogger(__name__)
 server = Server("mlit-geospatial-mcp")
 
 
+def _build_resource_error_contents(
+    requested_uri: str, error_message: str
+) -> list[types.TextResourceContents]:
+    body = {
+        "status": "error",
+        "error": error_message,
+        "requested_uri": requested_uri,
+        "available_resources": [str(resource.uri) for resource in RESOURCES],
+    }
+    return [
+        types.TextResourceContents(
+            uri=requested_uri,
+            mimeType="application/json",
+            text=json.dumps(body, ensure_ascii=False, indent=2),
+        )
+    ]
+
+
+def _build_prompt_error_result(
+    requested_name: str, error_message: str
+) -> types.GetPromptResult:
+    available_prompts = [prompt.name for prompt in PROMPTS]
+    return types.GetPromptResult(
+        description="指定された prompt は見つかりませんでした。",
+        messages=[
+            types.PromptMessage(
+                role="user",
+                content=types.TextContent(
+                    type="text",
+                    text=(
+                        f"{error_message}\n"
+                        f"requested_name: {requested_name}\n"
+                        f"available_prompts: {', '.join(available_prompts)}"
+                    ),
+                ),
+            )
+        ],
+    )
+
+
 @server.list_tools()
 async def handle_list_tools():
     """
@@ -61,7 +101,11 @@ async def handle_read_resource(uri: str):
     Returns:
         list[TextResourceContents]: リソース本文
     """
-    return build_resource_contents(uri)
+    try:
+        return build_resource_contents(uri)
+    except ValueError as exc:
+        logger.warning(f"Unknown resource requested: {uri}")
+        return _build_resource_error_contents(uri, str(exc))
 
 
 @server.list_prompts()
@@ -87,7 +131,11 @@ async def handle_get_prompt(name: str, arguments: dict | None = None):
     Returns:
         GetPromptResult: プロンプト本文
     """
-    return build_prompt(name, arguments)
+    try:
+        return build_prompt(name, arguments)
+    except ValueError as exc:
+        logger.warning(f"Unknown prompt requested: {name}")
+        return _build_prompt_error_result(name, str(exc))
 
 
 @server.call_tool()
