@@ -198,6 +198,9 @@ def build_resource_contents(uri: str) -> list[types.TextResourceContents]:
 
 
 def build_prompt(name: str, arguments: dict[str, Any] | None = None) -> types.GetPromptResult:
+    # Prompt引数は将来拡張用に受け取るが、現状の server_usage_guide では未使用。
+    _ = arguments
+
     if name != "server_usage_guide":
         raise ValueError(f"Unknown prompt name: {name}")
 
