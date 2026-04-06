@@ -7,6 +7,10 @@ MCPサーバーのエントリポイント。
 ツールのリスト取得やツール呼び出しのハンドラを提供する。
 """
 
+from resources import PROMPTS, RESOURCES, build_prompt, build_resource_contents
+from request_processor.handler import handle_request
+from tools import API_SPECS, TOOLS
+from utils.payload import build_payload
 
 import anyio
 import mcp.types as types
@@ -14,11 +18,9 @@ from mcp.server.lowlevel import NotificationOptions, Server
 from mcp.server.models import InitializationOptions
 from mcp.server.stdio import stdio_server
 
-from resources import PROMPTS, RESOURCES, build_prompt, build_resource_contents
 from request_processor.handler import handle_request
 from tools import API_SPECS, TOOLS
 from utils.payload import build_payload
-from utils.space_id_calculaton import spatial_id_from_wgs84
 
 # ロガー設定
 logging.basicConfig(level=logging.INFO)
@@ -155,24 +157,6 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
     """
     rid = uuid.uuid4().hex
     logger.info(f"Tool called: {name} (request_id: {rid})")
-
-    # 空間ID計算ツールの場合（PLATEAUデータ取得）
-    if name == "plateau_space_id":
-        lat = arguments["lat"]
-        lon = arguments["lon"]
-        z = arguments.get("z", 18)
-        h_m = arguments.get("h_m", 0.0)
-        sid = spatial_id_from_wgs84(lat, lon, z, h_m)
-        result = {
-            "spatial_id": sid.as_string(),
-            "components": {"z": sid.z, "f": sid.f, "x": sid.x, "y": sid.y},
-        }
-        return [
-            types.TextContent(
-                type="text",
-                text=json.dumps(result, ensure_ascii=False, indent=2),
-            )
-        ]
 
     spec = API_SPECS[name]
     payload = build_payload(

@@ -59,6 +59,11 @@ class RequestModel(BaseModel):
             23,
             24,
             25,
+            26,
+            27,
+            28,
+            29,
+            30,
         ],
         "price_classification": [1],
         "year": [1, 2, 3],
@@ -67,7 +72,7 @@ class RequestModel(BaseModel):
         "division": [2],
         "land_price_classification": [3],
         "use_category_code": [3],
-        "administrative_area_code": [7, 8, 12, 16, 17, 21, 22],
+        "administrative_area_code": [7, 8, 12, 16, 17, 21, 22, 30],
         "welfare_facility_class_code": [12],
         "welfare_facility_middle_class_code": [12],
         "welfare_facility_minor_class_code": [12],
@@ -106,6 +111,11 @@ class RequestModel(BaseModel):
                 23,
                 24,
                 25,
+                26,
+                27,
+                28,
+                29,
+                30,
             ]
         return v
 
@@ -131,4 +141,3 @@ class RequestModel(BaseModel):
 class ResponseModel(BaseModel):
     status: str
     message: str
-    download_url: Optional[str] = None

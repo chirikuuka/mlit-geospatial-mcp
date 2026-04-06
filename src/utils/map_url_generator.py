@@ -56,88 +56,43 @@ API_LAYERS = {
         },
     ],
     12: [
-        # 常にwelfareFacilityレイヤを追加
         {
             "layer": "welfareFacility",
             "condition": lambda p: True,
             "params": lambda p: [],
         },
-        # 各分類ごと
-        {
-            "layer": "shelterLayer",
-            "condition": lambda p: "01"
-            in [
-                c.strip() for c in p.get("welfare_facility_class_code", []) if c.strip()
-            ],
-            "params": lambda p: [],
-        },
-        {
-            "layer": "elderlyWelfareFacilityLayer",
-            "condition": lambda p: "02"
-            in [
-                c.strip() for c in p.get("welfare_facility_class_code", []) if c.strip()
-            ],
-            "params": lambda p: [],
-        },
-        {
-            "layer": "facilityForTheHandicappedLayer",
-            "condition": lambda p: "03"
-            in [
-                c.strip() for c in p.get("welfare_facility_class_code", []) if c.strip()
-            ],
-            "params": lambda p: [],
-        },
-        {
-            "layer": "socialParticipationSupportFacilitiesLayer",
-            "condition": lambda p: "04"
-            in [
-                c.strip() for c in p.get("welfare_facility_class_code", []) if c.strip()
-            ],
-            "params": lambda p: [],
-        },
-        {
-            "layer": "childWelfareFacilityLayer",
-            "condition": lambda p: "05"
-            in [
-                c.strip() for c in p.get("welfare_facility_class_code", []) if c.strip()
-            ],
-            "params": lambda p: [],
-        },
-        {
-            "layer": "maternalAndChildWelfareLayer",
-            "condition": lambda p: "06"
-            in [
-                c.strip() for c in p.get("welfare_facility_class_code", []) if c.strip()
-            ],
-            "params": lambda p: [],
-        },
-        {
-            "layer": "otherWelfareFacilityLayer",
-            "condition": lambda p: "99"
-            in [
-                c.strip() for c in p.get("welfare_facility_class_code", []) if c.strip()
-            ],
-            "params": lambda p: [],
-        },
-        # その他はデフォルト
+        # 分類レイヤー
         *[
             {
                 "layer": l,
-                "condition": lambda p, l=l: not any(
-                    code.strip() == l_code
-                    for code in p.get("welfare_facility_class_code", [])
-                    if code.strip()
-                    for l_code in ["01", "02", "03", "04", "05", "06", "99"]
-                    if l
-                    == {
-                        "shelterLayer": "01",
-                        "elderlyWelfareFacilityLayer": "02",
-                        "facilityForTheHandicappedLayer": "03",
-                        "socialParticipationSupportFacilitiesLayer": "04",
-                        "childWelfareFacilityLayer": "05",
-                        "maternalAndChildWelfareLayer": "06",
-                        "otherWelfareFacilityLayer": "99",
-                    }[l]
+                "condition": lambda p, l=l, code=code: (
+                    isinstance(p.get("welfare_facility_class_code"), list)
+                    and any(
+                        (c and isinstance(c, str) and c.strip() == code)
+                        for c in p.get("welfare_facility_class_code")
+                    )
+                ),
+                "params": lambda p: [],
+            }
+            for l, code in [
+                ("shelterLayer", "01"),
+                ("elderlyWelfareFacilityLayer", "02"),
+                ("facilityForTheHandicappedLayer", "03"),
+                ("socialParticipationSupportFacilitiesLayer", "04"),
+                ("childWelfareFacilityLayer", "05"),
+                ("maternalAndChildWelfareLayer", "06"),
+                ("otherWelfareFacilityLayer", "99"),
+            ]
+        ],
+        # 指定がなければ全分類レイヤー
+        *[
+            {
+                "layer": l,
+                "condition": lambda p: (
+                    not (
+                        isinstance(p.get("welfare_facility_class_code"), list)
+                        and p.get("welfare_facility_class_code")
+                    )
                 ),
                 "params": lambda p: [],
             }
@@ -307,6 +262,43 @@ API_LAYERS = {
     25: [
         {
             "layer": "liqueFactionLayer",
+            "condition": lambda p: True,
+            "params": lambda p: [],
+        },
+    ],
+    26: [
+        {
+            "layer": "shinsuishin-layer",
+            "condition": lambda p: True,
+            "params": lambda p: [],
+        },
+    ],
+    27: [
+        {
+            "layer": "hightideShinsuishinLayer",
+            "condition": lambda p: True,
+            "params": lambda p: [],
+        },
+    ],
+    28: [
+        {
+            "layer": "tsunamiLayer",
+            "condition": lambda p: True,
+            "params": lambda p: [],
+        },
+    ],
+    29: [
+        {"layer": l, "condition": lambda p, l=l: True, "params": lambda p: []}
+        for l in [
+            "sedimentDisasterArea",
+            "dosekiryukeikaikuikiLayer",
+            "kyukeishakeikaikuikiLayer",
+            "jisuberikeikaikuikiLayer",
+        ]
+    ],
+    30: [
+        {
+            "layer": "denselyInhabitedDistrictLayer",
             "condition": lambda p: True,
             "params": lambda p: [],
         },

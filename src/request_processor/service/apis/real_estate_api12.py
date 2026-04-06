@@ -23,20 +23,8 @@ class RealEstateApi12(BasePointApi):
         }
         for api_key, req_key in optional_param_mapping.items():
             value = self.req_body.get(req_key)
-            # 空リスト・空文字列・Noneは除外
-            if value is None:
-                continue
-            if isinstance(value, list):
-                if not value:  # 空リスト
-                    continue
-                str_value = ",".join(map(str, value))
-                if not str_value:
-                    continue
-                params[api_key] = str_value
-            elif isinstance(value, str):
-                if not value.strip():
-                    continue
-                params[api_key] = value
-            else:
-                params[api_key] = str(value)
+            if value is not None:
+                params[api_key] = (
+                    ",".join(map(str, value)) if isinstance(value, list) else value
+                )
         return params

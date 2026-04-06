@@ -90,6 +90,8 @@ class GeospatialService:
         base_output_folder = "C:/output"
         file_paths = []
 
+        now_folder = datetime.now().strftime("%Y%m%d%H%M")
+
         for c in req.coordinates:
             # 座標から変換処理
             converted = self.converted_coordinate(c)
@@ -116,26 +118,16 @@ class GeospatialService:
             map_url = build_map_url(c.lat, c.lon, req.target_apis, req_dict)
 
             # save_fileがTrueならファイル保存
+            file_paths = []
             if hasattr(req, "save_file") and req.save_file:
-                now_folder = datetime.now().strftime("%Y%m%d%H%M")
-                # output_dirが指定されていればそちらを使う（前後空白も除去）
-                output_dir = getattr(req, "output_dir", None)
-                if output_dir and isinstance(output_dir, str) and output_dir.strip():
-                    output_folder = Path(output_dir.strip()) / now_folder
-                else:
-                    output_folder = Path(base_output_folder) / now_folder
-                output_folder.mkdir(parents=True, exist_ok=True)
-
-                file_paths = []
+                # 保存対象を一時的に集める
+                save_targets = []
                 for idx, result in enumerate(api_results):
                     # 完全な None をスキップ
                     if result is None:
                         continue
 
-                    # 保存対象の本体を決める（デフォルトは result 全体）
                     payload_to_write = result
-
-                    # resultがdictでfile_nameキーがあればそれを使う
                     file_name = None
 
                     if isinstance(result, dict):
@@ -167,7 +159,23 @@ class GeospatialService:
 
                             payload_to_write = data
 
-                        # ここまで来たら保存
+                    # 保存対象が決まったらリストに追加
+                    save_targets.append((idx, payload_to_write, file_name))
+
+                # 保存対象が1つ以上ある場合のみフォルダ作成・保存
+                if save_targets:
+                    output_dir = getattr(req, "output_dir", None)
+                    if (
+                        output_dir
+                        and isinstance(output_dir, str)
+                        and output_dir.strip()
+                    ):
+                        output_folder = Path(output_dir.strip()) / now_folder
+                    else:
+                        output_folder = Path(base_output_folder) / now_folder
+                    output_folder.mkdir(parents=True, exist_ok=True)
+
+                    for idx, payload_to_write, file_name in save_targets:
                         if not file_name:
                             file_name = f"api_result_{idx + 1}.geojson"
 

@@ -14,7 +14,6 @@ from utils.definitions import ApiSpec
 
 API_SPEC = ApiSpec(
     tool_name="get_multi_api",
-    target_api=None,
     allowed_params={
         "distance",
         "price_classification",
@@ -39,7 +38,6 @@ TOOL = types.Tool(
     name=API_SPEC.tool_name,
     description="""
                     このtoolはtarget_apiに指定されたデータを取得します。
-                    target_apisが単一の指定で3,4,5の場合はAPIは専用のtoolを使用します。
                     例：「地価公示と都市計画区域のデータが欲しい」の場合、こちらのtoolでtarget_api3,4が指定されます。
 
                     返却内容は、取得結果と不動産ライブラリの地図表示用URL（＋保存先ディレクトリ）です。
@@ -76,9 +74,14 @@ TOOL = types.Tool(
                 - 23:都市計画決定GISデータ（地区計画）API
                 - 24:都市計画決定GISデータ（高度利用地区）API
                 - 25:国土交通省都市局（地形区分に基づく液状化の発生傾向図）API
+                - 26:国土数値情報（洪水浸水想定区域（想定最大規模））API
+                - 27:国土数値情報（高潮浸水想定区域）API
+                - 28:国土数値情報（津波浸水想定）API
+                - 29:国土数値情報（土砂災害警戒区域）API
+                - 30:国土数値情報（人口集中地区）API
                 
                 【任意パラメータ】
-                - distance：検索半径距離（API：1,2,3,9,10,11,12,15,17,18で指定可能）
+                - distance：検索半径距離（API：1,2,3,9,10,11,12,15,17,18,29で指定可能）
                 - price_classification：価格情報区分コード（API：1で指定可能）
                 - year：対象年（API：1,2,3で指定可能）
                 - quarter:取引時期（四半期）（API：1で指定可能）
@@ -86,7 +89,7 @@ TOOL = types.Tool(
                 - division:用途区分（API：2で指定可能）
                 - land_price_classification：地価情報区分コード（API：3で指定可能）
                 - use_category_code：用途区分コード（API：3で指定可能）
-                - administrative_area_code:行政区域コード（API：7,8,12,16,17,21,22で指定可能）
+                - administrative_area_code:行政区域コード（API：7,8,12,16,17,21,22,30で指定可能）
                 - welfare_facility_class_code:福祉施設大分類コード（API：12で指定可能）
                 - welfare_facility_middle_class_code:福祉施設中分類コード（API：12で指定可能）
                 - welfare_facility_minor_class_code:福祉施設小分類コード（API：12で指定可能）
@@ -114,11 +117,12 @@ TOOL = types.Tool(
 
                 ■ポリゴンデータ
                 - 検索した緯度経度と重なるポリゴンデータのみ返却します。
-                - 該当API：4,5,6,7,8,13,14,16,19,20,21,22,23,24,25
+                - 該当API：4,5,6,7,8,13,14,16,19,20,21,22,23,24,25,26,27,28,29,30（29のみラインデータを含む場合があります。）
 
                 ■ラインデータ
                 - ポイントデータの概要と同様。
-                - 該当API：15
+                - 該当API：15,29 (29のみポリゴンデータを含む場合があります。)
+                
 
                 ■その他
                 - 座標情報がないため、地名でフィルタリングをしています。
@@ -154,7 +158,7 @@ TOOL = types.Tool(
                 "description": (
                     "中心地点からの検索距離（メートル）。（任意）"
                     "この値は 0〜425[m] の範囲で指定できます。425m を超える場合はエラーになります。"
-                    "target_apiが1,2,3,9,10,11,12,15,17,18のとき有効。"
+                    "target_apiが1,2,3,9,10,11,12,15,17,18,29のとき有効。"
                 ),
                 "default": 425.0,
                 "maximum": 425.0,
@@ -229,7 +233,7 @@ TOOL = types.Tool(
                 "type": "array",
                 "items": {"type": "string"},
                 "description": (
-                    "target_apiが7,8,12,16,17,21,22のとき有効。"
+                    "target_apiが7,8,12,16,17,21,22,30のとき有効。"
                     "行政区域コード（任意）。カンマ区切り指定可。"
                     " 形式は数字5桁（文字列）"
                 ),

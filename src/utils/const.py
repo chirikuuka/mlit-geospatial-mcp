@@ -1,7 +1,6 @@
 import os
 
 ZOOM = 15
-PLATEAU_ZOOM = 18
 MAP_URL_ZOOM = 16
 SURVER_YEAR = 2025
 
@@ -10,26 +9,11 @@ SURVER_YEAR = 2025
 LIBRARY_API_KEY = os.getenv("LIBRARY_API_KEY")
 LIBRARY_API_URL = "https://www.reinfolib.mlit.go.jp/ex-api/external"
 
-####### PLATEAUに関する定数定義 #######
-# API情報
-PLATEAU_API_URL = "https://api.plateauview.mlit.go.jp/datacatalog/citygml/"
-
-####### 登記所備付地図に関する定数定義 #######
-LANDMAP_API_URL = "https://www.geospatial.jp/ckan/api/3/action/package_search"
-SEARCH_KEY = ["登記所備付地図"]
-
-# 出力フォルダ
-OUTPUT_PATH = r"C:\output\landmap"
-OUTPUT_FILE = "output.geojson"
-
 ####### 逆ジオコーダ（国土地理院） #######
 RE_RGEOCODER_URL = "https://mreversegeocoder.gsi.go.jp/reverse-geocoder/LonLatToAddress"
 
 ####### ジオコーダ（国土地理院） #######
 RGEOCODER_URL = "https://msearch.gsi.go.jp/address-search/AddressSearch"
-
-####### 情報変換バッチ ファイル変換 #######
-DOWNLOAD = "/tmp/download"
 
 ####### 都道府県一覧 #######
 PREFECTURE_MAP = {

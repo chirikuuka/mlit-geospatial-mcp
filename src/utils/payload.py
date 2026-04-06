@@ -33,12 +33,7 @@ def build_payload(
         ],
     }
 
-    if spec.target_api is not None:
-        # 単一API
-        payload["target_apis"] = [spec.target_api]
-    else:
-        # multi_api
-        payload["target_apis"] = args.get("target_apis", [])
+    payload["target_apis"] = args.get("target_apis", [])
 
     # 任意パラメータを許可リストベースで追加
     for param in spec.allowed_params:

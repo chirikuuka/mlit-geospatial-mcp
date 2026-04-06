@@ -25,6 +25,11 @@ from request_processor.service.apis.real_estate_api22 import RealEstateApi22
 from request_processor.service.apis.real_estate_api23 import RealEstateApi23
 from request_processor.service.apis.real_estate_api24 import RealEstateApi24
 from request_processor.service.apis.real_estate_api25 import RealEstateApi25
+from request_processor.service.apis.real_estate_api26 import RealEstateApi26
+from request_processor.service.apis.real_estate_api27 import RealEstateApi27
+from request_processor.service.apis.real_estate_api28 import RealEstateApi28
+from request_processor.service.apis.real_estate_api29 import RealEstateApi29
+from request_processor.service.apis.real_estate_api30 import RealEstateApi30
 
 
 class APIEnum(IntEnum):
@@ -54,6 +59,11 @@ class APIEnum(IntEnum):
     API23 = 23
     API24 = 24
     API25 = 25
+    API26 = 26
+    API27 = 27
+    API28 = 28
+    API29 = 29
+    API30 = 30
 
     def get_instance(
         self,
@@ -65,9 +75,6 @@ class APIEnum(IntEnum):
         if not cls:
             raise ValueError(f"存在しないAPIコード：{self}")
 
-            # if issubclass(cls, (PlateauApi, LandMapApi)):
-            #     return cls(req_body, converted, factory, config, request_id)
-            # else:
         return cls(req_body, converted)
 
     @classmethod
@@ -106,4 +113,9 @@ CLASS_MATRIX = {
     APIEnum.API23: RealEstateApi23,
     APIEnum.API24: RealEstateApi24,
     APIEnum.API25: RealEstateApi25,
+    APIEnum.API26: RealEstateApi26,
+    APIEnum.API27: RealEstateApi27,
+    APIEnum.API28: RealEstateApi28,
+    APIEnum.API29: RealEstateApi29,
+    APIEnum.API30: RealEstateApi30,
 }
