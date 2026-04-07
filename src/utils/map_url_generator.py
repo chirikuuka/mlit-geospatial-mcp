@@ -3,7 +3,7 @@
 lat, lon, target_apis から地図表示用URLを生成する
 """
 
-from utils.const import MAP_URL_ZOOM, SURVER_YEAR
+from utils.const import MAP_URL_ZOOM, SURVEY_YEAR
 
 # target_api番号 → レイヤ・条件・追加パラメータ対応表
 API_LAYERS = {
@@ -328,13 +328,13 @@ def build_map_url(
     url_params: list[str] = []
     params = params or {}
 
-    # API 3: surveyYearはparams["year"]があればそれを、なければSURVER_YEAR
+    # API 3: surveyYearはparams["year"]があればそれを、なければSURVEY_YEAR
     if 3 in target_apis:
         year = params.get("year")
         if isinstance(year, int) or (isinstance(year, float) and year.is_integer()):
             url_params.append(f"surveyYear={int(year)}")
         else:
-            url_params.append(f"surveyYear={SURVER_YEAR}")
+            url_params.append(f"surveyYear={SURVEY_YEAR}")
 
     for api in target_apis:
         for entry in API_LAYERS.get(api, []):

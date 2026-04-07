@@ -50,7 +50,7 @@ class BaseRealEstateApi(BaseApi):
         pass
 
     def exchange(self):
-        self.logger.info(f"{self.API_CONFIG.get('name', '')} excange開始")
+        self.logger.info(f"{self.API_CONFIG.get('name', '')} exchange 開始")
         try:
             raw_data = self._call_api()
             processed_data = self._process_data(raw_data)
@@ -63,7 +63,7 @@ class BaseRealEstateApi(BaseApi):
                 "data": processed_data,
             }
         except Exception as e:
-            self.logger.error(f"{self.API_CONFIG.get('name', '')} excange エラー:{e}")
+            self.logger.error(f"{self.API_CONFIG.get('name', '')} exchange エラー:{e}")
             return None
 
 

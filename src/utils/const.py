@@ -2,7 +2,7 @@ import os
 
 ZOOM = 15
 MAP_URL_ZOOM = 16
-SURVER_YEAR = 2025
+SURVEY_YEAR = 2025
 
 ####### 不動産ライブラリに関する定数定義 #######
 # API情報
