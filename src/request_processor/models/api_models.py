@@ -5,6 +5,7 @@ from pydantic import BaseModel, field_validator, model_validator
 
 
 # リクエストモデル
+
 class coodinatesItem(BaseModel):
     lat: float
     lon: float
@@ -20,6 +21,13 @@ class RequestModel(BaseModel):
     quarter: Optional[int] = None
     language: Optional[str] = None
     division: Optional[List[str]] = ["00", "03", "05", "07", "09", "10", "13", "20"]
+
+    @field_validator("division", mode="before")
+    @classmethod
+    def coerce_division_to_list(cls, v):
+        if isinstance(v, str):
+            return [item.strip() for item in v.split(",") if item.strip()]
+        return v
     land_price_classification: Optional[str] = None
     use_category_code: Optional[List[str]] = None
     administrative_area_code: Optional[List[str]] = None
