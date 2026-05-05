@@ -2,13 +2,16 @@ import requests
 
 from utils.const import RGEOCODER_URL
 
+# 接続5秒・読み取り30秒。MCPサーバー全体のハングを防ぐ。
+DEFAULT_TIMEOUT = (5, 30)
+
 
 # 住所から緯度経度(国土地理院のジオコーダ)
 def get_latlon(full_addr):
     response = requests.get(
         f"{RGEOCODER_URL}?q={full_addr}",
         headers={"User-Agent": "REINS-Client"},
-        verify=False,
+        timeout=DEFAULT_TIMEOUT,
     )
 
     result = response.json()

@@ -35,16 +35,15 @@ def filter_distance(
         geom_type = geom.get("type")
         coords = geom.get("coordinates")
 
-        if geom_type in ["Point", "LineString"]:
-            if geom_type == "Point":
-                target_lon, target_lat = coords
-                target_geom = f"POINT({target_lon} {target_lat})"
-            # ライン
-            elif geom_type == "LineString":
-                coord_str = ", ".join(
-                    f"{target_lon} {target_lat}" for target_lon, target_lat in coords
-                )
-                target_geom = f"LINESTRING({coord_str})"
+        if geom_type == "Point":
+            target_lon, target_lat = coords
+            target_geom = f"POINT({target_lon} {target_lat})"
+        elif geom_type == "LineString":
+            coord_str = ", ".join(f"{lon} {lat}" for lon, lat in coords)
+            target_geom = f"LINESTRING({coord_str})"
+        else:
+            # Point / LineString 以外（Polygon等）は距離フィルタ非対応のためスキップ
+            continue
 
         # 距離チェック
         result = get_distance(search_geom, target_geom)

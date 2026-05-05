@@ -4,6 +4,9 @@ import requests
 
 from utils.const import LIBRARY_API_KEY, LIBRARY_API_URL
 
+# 接続5秒・読み取り30秒。MCPサーバー全体のハングを防ぐ。
+DEFAULT_TIMEOUT = (5, 30)
+
 PREFECTURE_CODES = {
     "01": "北海道",
     "02": "青森県",
@@ -95,6 +98,6 @@ def get_libraryapi(pref_cd):
             "User-Agent": "REINS-Client",
             "Ocp-Apim-Subscription-Key": LIBRARY_API_KEY,
         },
-        verify=False,
+        timeout=DEFAULT_TIMEOUT,
     )
     return response.json()
