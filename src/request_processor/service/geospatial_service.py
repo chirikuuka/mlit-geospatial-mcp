@@ -87,7 +87,9 @@ class GeospatialService:
                 ),
             }
 
-        base_output_folder = "C:/output"
+        # output_dir 未指定時のデフォルト保存先。
+        # クロスプラットフォーム対応のため、ユーザーホーム配下を使用する。
+        base_output_folder = Path.home() / "Documents" / "mlit-geospatial-mcp"
         file_paths = []
 
         now_folder = datetime.now().strftime("%Y%m%d%H%M")
@@ -172,7 +174,7 @@ class GeospatialService:
                     ):
                         output_folder = Path(output_dir.strip()) / now_folder
                     else:
-                        output_folder = Path(base_output_folder) / now_folder
+                        output_folder = base_output_folder / now_folder
                     output_folder.mkdir(parents=True, exist_ok=True)
 
                     for idx, payload_to_write, file_name in save_targets:
