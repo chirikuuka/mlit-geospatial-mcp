@@ -1,0 +1,20 @@
+[project]
+name = "mlit-geospatial-mcp"
+version = "1.0.0"
+description = "Remote MCP server for MLIT geospatial data"
+requires-python = ">=3.13"
+dependencies = [
+  "mcp==2.0.0",
+  "pyproj==3.7.2",
+  "requests==2.32.5",
+  "shapely==2.1.2",
+  "uvicorn==0.37.0",
+]
+
+[dependency-groups]
+dev = [
+  "pytest==8.4.2",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

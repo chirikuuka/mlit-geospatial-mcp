@@ -95,6 +95,7 @@ def get_libraryapi(pref_cd):
             "User-Agent": "REINS-Client",
             "Ocp-Apim-Subscription-Key": LIBRARY_API_KEY,
         },
-        verify=False,
+        timeout=20,
     )
+    response.raise_for_status()
     return response.json()
