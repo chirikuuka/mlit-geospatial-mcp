@@ -1,0 +1,34 @@
+{
+  "name": "mlit-geospatial-mcp-cloudflare",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "build": "pnpm run types:check",
+    "deploy": "WRANGLER_LOG_PATH=.wrangler/wrangler.log wrangler deploy",
+    "deploy:dry-run": "WRANGLER_LOG_PATH=.wrangler/wrangler.log wrangler deploy --dry-run",
+    "dev": "WRANGLER_LOG_PATH=.wrangler/wrangler.log wrangler dev",
+    "secrets:configure": "node scripts/configure-secrets.mjs",
+    "smoke:remote": "node scripts/smoke-remote.mjs",
+    "test": "vitest run",
+    "types": "WRANGLER_LOG_PATH=.wrangler/wrangler.log wrangler types",
+    "types:check": "pnpm run types && tsc --noEmit",
+    "verify": "pnpm run test && pnpm run types:check && pnpm run deploy:dry-run"
+  },
+  "dependencies": {
+    "@cloudflare/containers": "0.3.7"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.10",
+    "wrangler": "4.123.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "workerd"
+    ]
+  }
+}

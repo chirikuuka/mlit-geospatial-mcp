@@ -1,0 +1,50 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "mlit-geospatial-mcp",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-14",
+  "workers_dev": true,
+  "containers": [
+    {
+      "name": "mlit-geospatial",
+      "class_name": "MlitGeospatialContainer",
+      "image": "./Dockerfile",
+      "image_build_context": ".",
+      "max_instances": 1,
+      "instance_type": "basic",
+      "constraints": {
+        "regions": ["APAC"]
+      }
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "MLIT_GEOSPATIAL_CONTAINER",
+        "class_name": "MlitGeospatialContainer"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["MlitGeospatialContainer"]
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "MCP_RATE_LIMITER",
+      "namespace_id": "48173531",
+      "simple": {
+        "limit": 60,
+        "period": 60
+      }
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "invocation_logs": false
+    }
+  }
+}
